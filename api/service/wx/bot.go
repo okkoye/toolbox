@@ -3,11 +3,12 @@ package wx
 import (
 	logger2 "chatplus/logger"
 	"chatplus/store/model"
+	"os"
+	"strconv"
+
 	"github.com/eatmoreapple/openwechat"
 	"github.com/skip2/go-qrcode"
 	"gorm.io/gorm"
-	"os"
-	"strconv"
 )
 
 // 微信收款机器人
@@ -39,7 +40,8 @@ func (b *Bot) Run() error {
 	debug, err := strconv.ParseBool(os.Getenv("APP_DEBUG"))
 	if debug {
 		reloadStorage := openwechat.NewJsonFileHotReloadStorage("storage.json")
-		err = b.bot.HotLogin(reloadStorage, true)
+		// todo 重新对接
+		err = b.bot.HotLogin(reloadStorage, nil)
 	} else {
 		err = b.bot.Login()
 	}

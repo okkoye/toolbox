@@ -50,7 +50,7 @@ func (h *ManagerHandler) Login(c *gin.Context) {
 		}
 		// 保存到 redis
 		key := "users/" + manager.Username
-		if _, err := h.redis.Set(context.Background(), key, tokenString, 0).Result(); err != nil {
+		if _, err := h.redis.Set(context.Background(), key, tokenString, time.Second*time.Duration(h.App.Config.Session.MaxAge)).Result(); err != nil {
 			resp.ERROR(c, "error with save token: "+err.Error())
 			return
 		}
